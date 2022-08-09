@@ -8,4 +8,5 @@ import javax.servlet.http.HttpSession;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     User findByUsername(String username);
+    User findById(int id);
 }

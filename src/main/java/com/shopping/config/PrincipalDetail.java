@@ -2,6 +2,8 @@ package com.shopping.config;
 
 import com.shopping.entity.User;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,7 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@Data
+@Getter
+@Setter
 public class PrincipalDetail implements UserDetails{
     private static final long serialVersion = 1L;
     private User user;

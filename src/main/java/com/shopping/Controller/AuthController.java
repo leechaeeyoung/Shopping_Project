@@ -1,5 +1,6 @@
-package com.shopping.Controller;
+package com.shopping.controller;
 
+import com.shopping.dto.SignupDto;
 import com.shopping.entity.User;
 import com.shopping.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -15,23 +16,20 @@ import javax.servlet.http.HttpSession;
 public class AuthController {
     private final AuthService authService;
 
-    @GetMapping("/signin")
+    @GetMapping("/signup")
     public String SignupForm(){
         return "signup";
     }
-    @PostMapping("/signup")
-    public String signUp(User user){
-        User newUser = user;
-        User userEntity = authService.signup(user);
-
-        System.out.println(userEntity);
+    @PostMapping("/signin")
+    public String signinForm(){
         return "signin";
     }
-
-    //로그아웃 버튼
-    @GetMapping("/logout")
-    public String logout(HttpSession session) throws Exception{
-        authService.logout(session);
-        return "redirect:/signin";
+    @PostMapping("/signup")
+    public String signup(SignupDto signupDto){
+        // user 에 signupDto 삽입
+        User user = signupDto.toEntity();
+        User userEntity = authService.signup(user);
+        System.out.println(userEntity);
+        return "signin";
     }
 }

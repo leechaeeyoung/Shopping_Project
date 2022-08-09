@@ -16,6 +16,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         //DB 패스워드 암호화
         return new BCryptPasswordEncoder();
     }
+    @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.csrf().disable(); // csrf 토큰 비활성화
         http.authorizeRequests()
