@@ -24,6 +24,7 @@ public class User {
     private String name;
     private String email;
     private String role; //권한
+
     private LocalDateTime createDate;
 
     @PrePersist  //DB에 INSERT 되기 전 실행
