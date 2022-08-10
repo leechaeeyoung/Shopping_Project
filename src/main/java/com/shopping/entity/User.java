@@ -28,18 +28,17 @@ public class User {
     private String email;
     private String address;
     private String phone;
-    private String role; //권한
+    private String role; //권한 (회원/관리자)
 
-    // 판매자 판매 상품들
+    // 판매자 갖고있는 상품들
+    @OneToMany(mappedBy = "seller")
+    private List<Item> items = new ArrayList<>();
+    // 판매자의 판매상품
     @OneToMany(mappedBy = "seller")
     private List<SaleItem> sellerSaleItem = new ArrayList<>();
-
-    // 판매자의 판매
+    //판매자의 판매
     @OneToMany(mappedBy = "seller")
-    private List<Sale> sellerSale;
-
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private LocalDateTime createDate;
+    private List<SaleItem> sellerSale;
 
     // 구매자 장바구니
     @OneToOne(mappedBy = "user")
@@ -53,6 +52,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<OrderItem> userOrderItem = new ArrayList<>();
 
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private LocalDateTime createDate;
     @PrePersist  //DB에 INSERT 되기 전 실행
     public void createDate(){
         this.createDate = LocalDateTime.now();

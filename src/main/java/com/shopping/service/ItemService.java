@@ -1,6 +1,5 @@
 package com.shopping.service;
 
-import com.shopping.entity.Cart;
 import com.shopping.entity.CartItem;
 import com.shopping.entity.Item;
 import com.shopping.repository.ItemRepository;
@@ -46,7 +45,7 @@ public class ItemService {
         return itemRepository.findBy(id).get();
     }
     // 상품 리스트 가져오기
-    public List<Cart> allItemView(){
+    public List<Item> allItemView(){
         return itemRepository.findAll();
     }
     // 상품 리스트 페이지 가져오기
