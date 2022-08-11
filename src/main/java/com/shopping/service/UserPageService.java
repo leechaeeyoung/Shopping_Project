@@ -20,5 +20,7 @@ public class UserPageService {
         update.setUsername(user.getUsername());
         update.setEmail(user.getEmail());
         update.setAddress(user.getAddress());
+        update.setPhone(user.getPhone());
+        userRepository.save(update);
     }
 }

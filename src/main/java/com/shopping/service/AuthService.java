@@ -31,7 +31,7 @@ public class AuthService {
 
         User userEntity = userRepository.save(user);
 
-        if(Object.equals(userEntity.getRole(),"ROLE_SELLER")){
+        if(Objects.equals(userEntity.getRole(),"ROLE_SELLER")){
             saleService.createSale(user);
         } else if(Objects.equals(user.getRole(),"ROLE_USER")){
             cartService.createCart(user);
