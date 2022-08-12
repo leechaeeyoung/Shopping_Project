@@ -5,6 +5,7 @@ import com.shopping.repository.CartItemRepository;
 import com.shopping.repository.OrderItemRepository;
 import com.shopping.repository.OrderRepository;
 import com.shopping.repository.SaleItemRepository;
+import groovy.transform.TailRecursive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,7 @@ public class OrderService {
     @Transactional
     public OrderItem addCartOrder(int itemId, int userId, CartItem cart,SaleItem saleItem){
         User user = userPageService.findUser(userId);
-        OrderItem orderItem = OrderItem.createOrderItem(itemId,user,cartItem,saleItem);
+        OrderItem orderItem = OrderItem.createOrderItem(itemId,user,cart,saleItem);
         orderItemRepository.save(orderItem);
         return orderItem;
     }
@@ -49,5 +50,27 @@ public class OrderService {
     }
     // 단일 상품 주문
     @Transactional
-    public void addOneItemOrder(int user)
+    public void addOneItemOrder(int userId,Item item,int count,SaleItem saleItem){
+        User user = userPageService.findUser(userId);
+        Order userOrder = Order.createOrder(user);
+        OrderItem orderItem = OrderItem.createOrderItem(item.getId(),user,item,count,userOrder,saleItem);
+        orderItemRepository.save(orderItem);
+        orderRepository.save(userOrder);
+    }
+    // 주문 취소 가능
+    @Transactional
+    public void orderCancel(User user,OrderItem cancelItem){
+        Item item = itemService.itemView(cancelItem.getItemId());
+        // 판매자 판매내역 total cnt 감소
+        cancelItem.getSaleItem().getSale().setTotalCnt(cancelItem.getSaleItem().getSale().getTotalCnt()-cancelItem.getItemCnt());
+        // 해당 item 재고 증가
+        item.setStock(item.getStock()+cancelItem.getItemCnt());
+        // 해당 order item 주문상태 1로 변경
+        cancelItem.setIsCancel(cancelItem.getIsCancel()+1);
+        // 해당 orderItem.get sale ItemId 로 saleItem 찾아서 판매 상태 1로 변경 -> 판매 취소를 의미
+        cancelItem.getSaleItem().setIsCancel(cancelItem.getSaleItem().getIsCancel()+1);
+
+        orderItemRepository.save(cancelItem);
+        saleItemRepository.save(cancelItem.getSaleItem());
+    }
 }

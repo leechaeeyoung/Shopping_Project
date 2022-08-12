@@ -69,10 +69,10 @@ public class CartService {
         List<CartItem> CartItems = cartItemRepository.findAll();
         for(CartItem cartItem:CartItems){
             if(cartItem.getCart().getId()==userCartId){
-                UserCartItems.add(cartItem);
+                userCartItem.add(cartItem);
             }
         }
-        return UserCartItems;
+        return userCartItem;
     }
     // 카트 상품 리스트 중 해당하는 상품 id만 반환
     public List<CartItem> findCartItemByItemId(int id){

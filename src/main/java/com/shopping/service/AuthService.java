@@ -5,8 +5,6 @@ import com.shopping.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.Objects;
 

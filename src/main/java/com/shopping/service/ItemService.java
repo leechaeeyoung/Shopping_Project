@@ -79,7 +79,7 @@ public class ItemService {
         for(CartItem item: items){
             cartService.cartItemDelete(item.getId());
         }
-        itemRepository.deleteById(item.getId());
+        itemRepository.deleteById(items.getId());
     }
     // 상품 검색
     public Page<Item> itemSearchList(String searchKeyword, Pageable pageable){
